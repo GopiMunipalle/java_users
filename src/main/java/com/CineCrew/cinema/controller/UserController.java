@@ -11,7 +11,6 @@ import com.CineCrew.cinema.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/users")
@@ -34,18 +33,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<User> createUser(@RequestBody UserDto userDTO) {
-        User user = new User();
-        user.setEmail(userDTO.getEmail());
-        user.setFirstName(userDTO.getFirstName());
-        user.setLastName(userDTO.getLastName());
-        user.setPassword(userDTO.getPassword());
-        user.setBio(userDTO.getBio());
-        user.setProfileImage(userDTO.getProfileImage());
-        user.setCountry(userDTO.getCountry());
-        user.setCity(userDTO.getCity());
-        User createdUser = userService.createUser(user, userDTO.getRoleNames());
-
+    public ResponseEntity<User> createUser(@RequestBody UserDto user) {
+        User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
     }
 
@@ -53,37 +42,5 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.ok().build();
-    }
-}
-
-// DTO for User Request
-class UserRequest {
-    private String name;
-    private String email;
-    private Set<String> roles;
-
-    // Getters & Setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
     }
 }

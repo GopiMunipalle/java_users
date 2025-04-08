@@ -1,56 +1,35 @@
 package com.CineCrew.cinema.dto;
 
-// import lombok.AllArgsConstructor;
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
+import io.micrometer.common.lang.*;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 
-import java.util.Set;
-
+@Data
 public class UserDto {
+    @NotBlank()
     private String email;
+    @Pattern(regexp = "^[A-Za-z ]+$", message = "Name must contain only letters and spaces")
     private String firstName;
+    @Pattern(regexp = "^[A-Za-z ]+$", message = "Name must contain only letters and spaces")
     private String lastName;
+    @NotBlank()
+    @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
+    @Nullable
     private String bio;
+    @Nullable
     private String profileImage;
+    @Nullable
     private String country;
+    @Nullable
     private String city;
-    // private Set<String> roleNames;
+    @NotBlank()
+    private Integer roleId;
+    @Nullable()
+    private Boolean isActive;
+    @Nullable
+    private Boolean isVerified;
+    @Nullable
+    private String fcmToken;
 
-    public String getEmail() {
-        return this.email;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public String getBio() {
-        return this.bio;
-    }
-
-    public String getProfileImage() {
-        return this.profileImage;
-    }
-
-    public String getCountry() {
-        return this.country;
-    }
-
-    public String getCity() {
-        return this.city;
-    }
-
-    public String getRoleNames() {
-        // return this.roleNames;
-        return "ADMIN";
-    }
 }

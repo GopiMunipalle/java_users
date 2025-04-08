@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -37,10 +36,6 @@ public class User {
 
     private String city;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
-
     private boolean isActive;
 
     private boolean isVerified;
@@ -52,17 +47,8 @@ public class User {
     @Column(name = "post_id")
     private List<Long> postIds;
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public User(String email, String firstName, String lastName, String password) {
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-        this.isActive = true; // Default new users as active
-        this.isVerified = false; // Not verified initially
-    }
+    // @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "role_id", nullable = false)
+    private int roleId;
 
 }
