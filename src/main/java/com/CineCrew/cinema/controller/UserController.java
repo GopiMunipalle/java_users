@@ -9,6 +9,7 @@ import com.CineCrew.cinema.dto.UserDto;
 import com.CineCrew.cinema.models.User;
 import com.CineCrew.cinema.service.UserService;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,15 @@ public class UserController {
     public ResponseEntity<User> createUser(@RequestBody UserDto user) {
         User createdUser = userService.createUser(user);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<HashMap<String, Object>> login(@RequestBody UserDto user) {
+        HashMap<String, Object> result = userService.Login(user.getEmail(), user.getPassword());
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("token", result.get("jwtToken"));
+        response.put("user", result.get("user"));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
